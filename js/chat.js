@@ -86,6 +86,7 @@ function startChat(friendKey, friendName, friendImg, currentUserImgURL) {
     document.getElementById('divChatName').innerHTML = friendName;
     document.getElementById('divChatImg').src = friendImg;
     /*   });*/
+    hideChatList();
     LoadChatMessages(friendKey, friendImg, currentUserImgURL);
 }
 function loadChatList() {
