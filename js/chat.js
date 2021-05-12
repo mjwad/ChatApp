@@ -1,6 +1,14 @@
 ﻿var Currentuid;
 var chatKey='';
 var ToId = '';
+
+document.addEventListener('keydown', function (key) {
+    if (key.which === 13) {
+        sendMessage();
+    }
+});
+
+
 function sendMessage() {
     chatMessage = {
         id: '', text:'', fromId: '', toId: '', timeStamp: Math.floor(new Date().getTime() / 1000)
@@ -238,13 +246,7 @@ function hideChatList() {
     document.getElementById("box2").classList.remove("d-none", "d-md-block");
     document.getElementById('box1').classList.add('d-none');
 }
-function onKeydown() {
-    document.addEventListener('keydown', function (key) {
-        if (key.which === 13) {
-            sendMessage();
-        }
-    });
-}
+
 function onStateChange(user) {
     if (user) {
         var userProfile = { uid: '', email: '', username: '', profileImageUrl: '' }
