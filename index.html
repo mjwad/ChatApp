@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta charset="utf-8" />
-    <script src="js/chat.js"></script>
+  
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/69010c3ee8.js" crossorigin="anonymous">
@@ -14,18 +14,11 @@
     <title>deServico Messenger</title>
 </head>
 <body onload="onFirebaseStateChange()">
-
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery-3.6.0.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase.js"></script>
-    <script src="js/firebase.init.js"></script>
     <div class="top"></div>
     <div class="container-fluid bg-white shadow-lg rounded chatbox">
         <div class="row h-100">
             <div class="col-md-4 pr-0 d-none d-md-block" id="box1">
-                <div class="card h-100">
+                <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-1 col-sm-1 col-md-1 d-md-none">
@@ -35,37 +28,36 @@
                                 <img id="profile-img" src="imgs/pp.png" class="profile-pic rounded-circle" />
                             </div>
                             <div class="col-2 col-sm-2 col-md-2">
-                                    <div class="dropleft">
-                                        <span class="dropdown-toggle"  data-toggle="dropdown" style="float:right;">
-                                            <i class="fas fa-ellipsis-v icon" style="cursor:pointer;"> </i>
-                                        </span>
-                                        <div class="dropdown-menu" style="float:left;">
-                                            <a href="#" class="dropdown-item" id="lnkNewChat"  onclick="populateFriendList()" data-toggle="modal" data-target="#modalFriendList">New Chat</a>
-                                            <a href="#" id="signInLink" onClick="signIn()" class="dropdown-item">Sign In</a>
-                                            <a href="#" id="signOutLink" onClick="signOut()" class="dropdown-item" style="display:none;">Sign Out</a>
-                                        </div>
-                                        <div class="modal fade" id="modalFriendList">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            Friend List
-                                                            <span class="close"  data-dismiss="modal" style="cursor:pointer;">
-                                                                &times; 
-                                                            </span>
-                                                        </div>
-                                                        <ul class="list-group list-group-flush" id="lstFriend">
-                                                            
-                                                        </ul>
+                                <div class="dropleft">
+                                    <span class="dropdown-toggle" data-toggle="dropdown" style="float:right;">
+                                        <i class="fas fa-ellipsis-v icon" style="cursor:pointer;"> </i>
+                                    </span>
+                                    <div class="dropdown-menu" style="float:left;">
+                                        <a href="#" class="dropdown-item" id="lnkNewChat" onclick="populateFriendList()" data-toggle="modal" data-target="#modalFriendList">New Chat</a>
+                                        <a href="#" id="signInLink" onClick="signIn()" class="dropdown-item">Sign In</a>
+                                        <a href="#" id="signOutLink" onClick="signOut()" class="dropdown-item" style="display:none;">Sign Out</a>
+                                    </div>
+                                    <div class="modal fade" id="modalFriendList">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        Friend List
+                                                        <span class="close" data-dismiss="modal" style="cursor:pointer;">
+                                                            &times;
+                                                        </span>
                                                     </div>
+                                                    <ul class="list-group list-group-flush" id="lstFriend">
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                        <ul class="list-group list-group-flush" id="lstChat">
+                    <ul class="list-group list-group-flush" id="lstChat">
                     </ul>
                 </div>
             </div>
@@ -89,24 +81,61 @@
                             </div>
                             <div class="col-4 col-sm-4 col-md-4 col-lg-3 icon">
                                 <i class="fas fa-search"></i>
-                                <i class="fas fa-paperclip ml-4"></i>
+                                <span class="dropdown">
+                                    <span class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fas fas fa-paperclip ml-4"> </i>
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="chooseImage()">
+                                            Image
+                                            <input type="file" accept="image/*" onchange="sendImage(this)" id="imageFile" style="display:none" />
+                                        </a>
+                                        <a href="#" class="dropdown-item">Document</a>
+                                        <a href="#" class="dropdown-item">Camera</a>
+                                        <a href="#" class="dropdown-item">Video</a>
+                                    </div>
+                                </span>
                                 <i class="fas fa-ellipsis-v ml-4"></i>
                             </div>
                         </div>
                     </div>
                     <div class="card-body" id="Message">
-                       
+
                     </div>
+
                     <div class="card-footer">
+                        <div class="row" style="position:relative;">
+                            <div class="col-md-12" id="emojiContainer" style="display:none;">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Smiley" role="tab" aria-controls="home" aria-selected="true">Smiley</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="Smiley" role="tabpanel" aria-labelledby="home-tab">
+                                        <a href="#" style="font-size:30px" onclick="getEmoji(this)"> &#128512;</a>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-2  col-md-1 emoji-icon">
-                                <i class="fas fa-grin fa-2x"></i>
+                                <i class="fas fa-grin fa-2x" onclick="showEmojis()" style="cursor:pointer;"></i>
                             </div>
                             <div class="col-8 col-md-10 ">
-                                <input id="txtMessage" type="text" placeholder="Type here" class="form-control form-rounded" />
+                                <input id="txtMessage"  onkeyup="ChangeSendIcon(this)"   type="text" placeholder="Type here" class="form-control form-rounded" />
                             </div>
                             <div class="col-2 col-md-1">
-                                <i class="fas fa-microphone fa-2x"></i>
+                                <i id="audiophone" onclick="record(this)" class ="fas fa-microphone fa-2x"></i>
+                                <i id="send"class ="fa fa-paper-plane fa-2x" style="display:none;"></i>
                             </div>
                         </div>
 
@@ -122,6 +151,12 @@
             </div>
         </div>
     </div>
-
+    <script src="js/chat.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase.js"></script>
+    <script src="js/firebase.init.js"></script>
 </body>
 </html>
